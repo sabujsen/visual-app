@@ -11,6 +11,24 @@ const PinSchema = new mongoose.Schema(
       required: true,
       min: 3,
       max: 60,
+    },   
+    featureimage: {
+      type: String,
+      required: true,
+      min: 3,
+      max: 60,
+    },
+    category: {
+      type: String,
+      required: true,
+      min: 3,
+      max: 60,
+    },
+    type: {
+      type: String,
+      required: true,
+      min: 3,
+      max: 60,
     },
     desc: {
       type: String,

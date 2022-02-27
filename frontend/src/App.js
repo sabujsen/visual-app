@@ -5,15 +5,22 @@ import { Room, Star, StarBorder } from "@material-ui/icons";
 import axios from "axios";
 import { format } from "timeago.js";
 import Register from "./components/Register";
+
 import Login from "./components/Login";
+import List from "./components/List/List";
 
 function App() {
   const myStorage = window.localStorage;
-  const [currentUsername, setCurrentUsername] = useState(myStorage.getItem("user"));
+  const [currentUsername, setCurrentUsername] = useState(
+    myStorage.getItem("user")
+  );
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
   const [title, setTitle] = useState(null);
+  const [type, setType] = useState(null);
+  const [featureimage, setFeatureImagePath] = useState(null);
+  const [category, setCategory] = useState(null);
   const [desc, setDesc] = useState(null);
   const [star, setStar] = useState(0);
   const [viewport, setViewport] = useState({
@@ -42,6 +49,9 @@ function App() {
     const newPin = {
       username: currentUsername,
       title,
+      type,
+      featureimage,
+      category,
       desc,
       rating: star,
       lat: newPlace.lat,
@@ -76,9 +86,10 @@ function App() {
 
   return (
     <div style={{ height: "100vh", width: "100%" }}>
+      <List></List>
       <ReactMapGL
         {...viewport}
-        mapboxApiAccessToken=""
+        mapboxApiAccessToken="pk.eyJ1Ijoic2FidWo4MiIsImEiOiJjbDA0b3dzOTcxcHhtM2txaGQ5cHR1dTViIn0.1XWpRSBBMStgVDKc9brJ1w"
         width="100%"
         height="100%"
         transitionDuration="200"
@@ -157,14 +168,35 @@ function App() {
               onClose={() => setNewPlace(null)}
               anchor="left"
             >
-              <div>
+              <div className="row">
                 <form onSubmit={handleSubmit}>
+                <div className="col-6">
                   <label>Title</label>
                   <input
                     placeholder="Enter a title"
                     autoFocus
                     onChange={(e) => setTitle(e.target.value)}
                   />
+                  <label>Type</label>
+                  <input
+                    placeholder="Enter a type"
+                    autoFocus
+                    onChange={(e) => setType(e.target.value)}
+                  />
+                  <label>Feature Image Path</label>
+                  <input
+                    placeholder="Enter a path"
+                    autoFocus
+                    onChange={(e) => setFeatureImagePath(e.target.value)}
+                  />
+                  <label>Category</label>
+                  <input
+                    placeholder="Enter a category"
+                    autoFocus
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
+                  </div>
+                  <div className="col-6">
                   <label>Description</label>
                   <textarea
                     placeholder="Say us something about this place."
@@ -178,6 +210,7 @@ function App() {
                     <option value="4">4</option>
                     <option value="5">5</option>
                   </select>
+                  </div>
                   <button type="submit" className="submitButton">
                     Add Pin
                   </button>
